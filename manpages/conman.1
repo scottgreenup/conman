@@ -1,0 +1,91 @@
+.TH "CONMAN" "1" "13/06/2015" "ConMan 0.0.1" "Configuration Manager"
+
+.SH "NAME"
+conman \- A simple configuration manager
+
+.SH "SYNOPSIS"
+\fIconman\fR <command> [<args>]
+
+.SH "DESCRIPTION"
+ConMan is a configuration manager built completely ontop of git. In fact, the program mainly fork and execs git commands. The only difference is that the git repository is hidden away, and the files in the git repositories have symbolic links to them.
+
+We currently do not support rebasing, branching and more. We also don't support multiple remotes, so the commands dealing with remotes (conman-remote, conman-push, conman-pull) are different (simpler) then their Git counterparts.
+
+.SH "EXAMPLE"
+Here is a very basic example of adding 2 files to conman.
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+\fB[user@hostname ~]# conman init\fR
+Initialized empty ConMan repository in ~/.conman/default
+Initialized empty Git repository in ~/.conman/default/files/.git
+
+\fB[user@hostname ~]# conman add .vimrc\fR
+Moved .vimrc to ~/.conman/default/files and added to Git index
+Symbolically linked .vimrc
+
+\fB[user@hostname ~]# conman add .bashrc\fR
+Moved .bashrc to ~/.conman/default/files and added to Git index
+Symbolically linked .bashrc
+
+\fB[user@hostname ~]# conman commit -m "Added .vimrc and .bashrc"\fR
+[master (root-commit) 4f939fc] Added .vimrc and .bashrc
+ 2 files changed, 102 insertions(+)
+  create mode 100644 .vimrc
+  create mode 100644 .bashrc
+
+\fB[user@hostname ~]# conman remote add github.com/user/conmanrepo\fR
+Remote added.
+
+\fB[user@hostname ~]# conman push\fR
+Pushed ~/.conman/default to github.com/user/conmanrepo
+\fR
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+
+.SH "HIGH LEVEL COMMANDS"
+.PP
+\fBconman-add\fR
+.RS 4
+Add file contents to the index.
+.RE
+.PP
+\fBconman-clone\fR
+.RS 4
+Clones a repository.
+.RE
+.PP
+\fBconman-commit\fR
+.RS 4
+Commit the added files to the git repository, iterates the version.
+.RE
+.PP
+\fBconman-diff\fR
+.RS 4
+Show the differences between two commits.
+.RE
+.PP
+\fBconman-pull\fR
+.RS 4
+Fetch from and sync with remote repository.
+.RE
+.PP
+\fBconman-push\fR
+.RS 4
+Pushes configuration to a remote server.
+.RE
+.PP
+\fBconman-remote\fR
+.RS 4
+Manage the tracked repository.
+.RE
+.PP
+\fBconman-rm\fR
+.RS 4
+Remove file contents from the index and/or working directory.
+.RE
