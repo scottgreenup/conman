@@ -20,36 +20,6 @@ typedef struct {
     bool copy;
 } config_file_t;
 
-void print_usage()
-{
-    fprintf(
-        stderr,
-        "\n"
-        "conman usage:\n"
-        "\n"
-        "    conman init\n"
-        "        Run this to init a directory that will hold config files.\n"
-        "\n"
-        "    conman add <filename> <linklocation> [category]\n"
-        "\n"
-        "    conman drop <filename>\n"
-        "        Removes a filename from the registry, non-deleting\n"
-        "\n"
-        "    conman rm <filename>\n"
-        "        Removes a filename from the registry\n"
-        "\n"
-        "    conman linkall [category]\n"
-        "        Links all files to their link location\n"
-        "\n"
-        "    conman edit <filename> <attribute> <value>\n"
-        "        Attributes include filename, linklocation, copy, and category\n"
-        "\n"
-        "    conman info [filename]\n"
-        "        Lists all filenames or,\n"
-        "        shows associated attributes with a filename\n"
-    );
-}
-
 /**
  * init() creates the CM_DIRECTORY directory and creates an empty CM_DATA file.
  * This effectively creates a way to test if a directory is a conman directory.
@@ -112,7 +82,7 @@ int add(int c, char* v[])
 
             cf.file[0] = '~';
 
-            memcpy(cf.file + 1)
+            memcpy(cf.file + 1, )
 
 
         }
@@ -139,32 +109,38 @@ int drop(int c, char* v[])
 
 int main(int argc, char* argv[])
 {
-    if (argc < 2 || !strcmp(argv[1], "-h")) {
-        print_usage();
-        return EXIT_FAILURE;
-    }
-
     int result = EXIT_FAILURE;
 
-    if (!strcmp(argv[1], "init")) {
-        result = init(argc - 2, argv + 2);
-    } else if (!strcmp(argv[1], "add")) {
+    if (!strcmp(argv[1], "add")) {
         result = add(argc - 2, argv + 2);
-    } else if (!strcmp(argv[1], "drop")) {
+    } else if (!strcmp(argv[1], "clone")) {
+
+    } else if (!strcmp(argv[1], "commit")) {
+
+    } else if (!strcmp(argv[1], "diff")) {
+
+    } else if (!strcmp(argv[1], "init")) {
+        result = init(argc - 2, argv + 2);
+    } else if (!strcmp(argv[1], "link")) {
+
+    } else if (!strcmp(argv[1], "pull")) {
+
+    } else if (!strcmp(argv[1], "push")) {
+
+    } else if (!strcmp(argv[1], "remote")) {
 
     } else if (!strcmp(argv[1], "rm")) {
 
-    } else if (!strcmp(argv[1], "linkall")) {
-
-    } else if (!strcmp(argv[1], "edit")) {
-
-    } else if (!strcmp(argv[1], "info")) {
-
+    } else if (!strcmp(argv[1], "use")) {
+        // usage: conman use <name>
+        // set the current working directory to ~/.conman/<name>
+        // set the current working git directory to ~/.conman/<name>/files
     }
 
-    if (result == EXIT_FAILURE) {
-        print_usage();
-    }
+    // .conman will need to maintain a record of files in the git repo and their
+    // associated location in the filesystem
+    // .conman/files is the git repository itself
+
     return result;
 }
 
