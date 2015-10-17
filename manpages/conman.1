@@ -48,6 +48,11 @@ Pushed ~/.conman/default to github.com/user/conmanrepo
 .\}
 .sp
 
+.SH "HOW FILES ARE MANAGED"
+A file that has been added to a conman repo, is moved into the conman repo and a symlink is created at the original file location that points to the moved file location.
+
+If a directory is the target, it will recursively add all the files to the repository and maintain directory structure. In other words, the directories are never a symlink, only the files are. The reason for this is certain applications like `zsh` do not follow symlinked directories.
+
 .SH "HIGH LEVEL COMMANDS"
 .PP
 \fBconman-add\fR
@@ -98,6 +103,11 @@ Manage the tracked repository.
 \fBconman-rm\fR
 .RS 4
 Remove file contents from the index and/or working directory.
+.RE
+.PP
+\fBconman-unlink\fR
+.RS 4
+Removes all symlinks, replacing the symlinks with a copy of the actual file.
 .RE
 .PP
 \fBconman-use\fR
