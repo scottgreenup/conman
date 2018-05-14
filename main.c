@@ -164,6 +164,29 @@ int use(int c, char* v[])
     return result;
 }
 
+/**
+ * Common use cases include:
+ *
+ *   conman add ./file
+ *   conman add /home/user/.file
+ *   conman add ./dir
+ *   conman add /home/user/dir
+ */
+int add(int c, char* v[]) {
+    // v[0] == filename
+    // detect if file or directory?
+    // mv the file
+    // symlink back
+
+    struct stat buf;
+    if (stat(v[0], &buf) == 0) {
+        return EXIT_FAILURE;
+    }
+    if (buf.st_mode & S_IFMT == buf.st_mode) {
+
+    }
+}
+
 int main(int argc, char* argv[])
 {
     if (setup_conman_dir() == EXIT_FAILURE) {
@@ -181,7 +204,7 @@ int main(int argc, char* argv[])
     int result = EXIT_FAILURE;
 
     if (!strcmp(command, "add")) {
-
+        add(argc, argv);
     } else if (!strcmp(command, "clone")) {
 
     } else if (!strcmp(command, "commit")) {
